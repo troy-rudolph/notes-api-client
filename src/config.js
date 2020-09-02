@@ -1,13 +1,17 @@
 export default {
-  MAX_ATTACHMENT_SIZE: 5000000,	
+  MAX_ATTACHMENT_SIZE: 5000000,
+  STRIPE_KEY: "pk_test_51HFNZrFpkpVT6mAyyVbh5hVnb5PWu3XYm07ENHg35qzGIy1yjejfAU9pPdxqqaSgBYiGXq5XG3kpgO2DhbEw7zmD00t1KZGCw3",
+	
   s3: {
     REGION: "us-east-2",
     BUCKET: "buckbranchranch"
   },
+
   apiGateway: {
     REGION: "us-east-2",
     URL: "https://6srxhl7q86.execute-api.us-east-2.amazonaws.com/prod"
   },
+
   cognito: {
     REGION: "us-east-2",
     USER_POOL_ID: "us-east-2_huseqtLkR",
