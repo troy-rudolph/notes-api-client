@@ -27,7 +27,7 @@ const prod = {
     URL: "https://r1hczo51ej.execute-api.us-east-2.amazonaws.com/prod"
   },
   cognito: {
-    REGION: "YOUR_PROD_COGNITO_REGION",
+    REGION: "us-east-2",
     USER_POOL_ID: "us-east-2_aISTjFGpB",
     APP_CLIENT_ID: "311haonih09lk18esnjhdrv808",
     IDENTITY_POOL_ID: "us-east-2:b37fb752-1e79-483e-91ed-5a78965924ca"
