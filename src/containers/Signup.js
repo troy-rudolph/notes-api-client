@@ -6,11 +6,11 @@ import {
   FormControl,
   ControlLabel
 } from "react-bootstrap";
+import { Auth } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { onError } from "../libs/errorLib";
-import { Auth } from "aws-amplify";
 import "./Signup.css";
 
 export default function Signup() {
@@ -52,12 +52,12 @@ export default function Signup() {
     } catch (e) {
       onError(e);
       setIsLoading(false);
-    } 
+    }
   }
 
   async function handleConfirmationSubmit(event) {
     event.preventDefault();
-  
+
     setIsLoading(true);
 
     try {
@@ -69,7 +69,7 @@ export default function Signup() {
     } catch (e) {
       onError(e);
       setIsLoading(false);
-    } 
+    }
   }
 
   function renderConfirmationForm() {
