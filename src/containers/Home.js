@@ -4,6 +4,7 @@ import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 
@@ -12,54 +13,62 @@ export default function Home() {
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
-useEffect(() => {
-  async function onLoad() {
-    if (!isAuthenticated) {
-      return;
+  useEffect(() => {
+    async function onLoad() {
+      if (!isAuthenticated) {
+        return;
+      }
+
+      try {
+        const notes = await loadNotes();
+        setNotes(notes);
+      } catch (e) {
+        onError(e);
+      }
+
+      setIsLoading(false);
     }
 
-    try {
-      const notes = await loadNotes();
-      setNotes(notes);
-    } catch (e) {
-      onError(e);
-    }
+    onLoad();
+  }, [isAuthenticated]);
 
-    setIsLoading(false);
+  function loadNotes() {
+    return API.get("notes", "/notes");
   }
 
-  onLoad();
-}, [isAuthenticated]);
-
-function loadNotes() {
-  return API.get("notes", "/notes");
-}
-
-function renderNotesList(notes) {
-  return [{}].concat(notes).map((note, i) =>
-    i !== 0 ? (
-      <LinkContainer key={note.noteId} to={`/notes/${note.notesId}`}>
-        <ListGroupItem header={note.content.trim().split("\n")[0]}>
-          {"Created: " + new Date(note.createdAt).toLocaleString()}
-        </ListGroupItem>
-      </LinkContainer>
-    ) : (
-      <LinkContainer key="new" to="/notes/new">
-        <ListGroupItem>
-          <h4>
-            <b>{"\uFF0B"}</b> Create a new note
-          </h4>
-        </ListGroupItem>
-      </LinkContainer>
-    )
-  );
-}
+  function renderNotesList(notes) {
+    return [{}].concat(notes).map((note, i) =>
+      i !== 0 ? (
+        <LinkContainer key={note.noteId} to={`/notes/${note.notesId}`}>
+          <ListGroupItem header={note.content.trim().split("\n")[0]}>
+            {"Created: " + new Date(note.createdAt).toLocaleString()}
+          </ListGroupItem>
+        </LinkContainer>
+      ) : (
+        <LinkContainer key="new" to="/notes/new">
+          <ListGroupItem>
+            <h4>
+              <b>{"\uFF0B"}</b> Create a new note
+            </h4>
+          </ListGroupItem>
+        </LinkContainer>
+      )
+    );
+  }
 
   function renderLander() {
     return (
       <div className="lander">
         <h1>Scratch</h1>
         <p>A simple note taking app</p>
+        <div>
+          <Link to="/login" className="btn btn-info btn-lg">
+            Login
+          </Link>
+          <Link to="/signup" className="btn btn-success btn-lg">
+            Signup
+          </Link>
+        </div>
       </div>
     );
   }
